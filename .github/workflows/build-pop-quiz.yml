@@ -1,4 +1,4 @@
-name: Build Pop Quiz JSON
+name: Validate Pop Quiz (no push)
 
 on:
   push:
@@ -23,16 +23,8 @@ jobs:
       - name: Install deps
         run: pip install pyyaml
 
-      - name: Build
+      - name: Build (generate quiz_pop.json)
         run: python tools/build_quiz.py
 
       - name: Validate
         run: python tools/validate_json.py
-
-      - name: Commit build output
-        run: |
-          git config user.name "github-actions"
-          git config user.email "github-actions@github.com"
-          git add quizzes/pop/build/quiz_pop.json
-          git commit -m "Build quiz_pop.json" || echo "No changes"
-          git push
